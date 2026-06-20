@@ -1,152 +1,76 @@
-# Mango Books — Online Book Borrowing Platform
+# Mango Books
 
-A seamless and modern web application that digitizes the traditional library experience. Users can explore books, filter by categories, borrow titles digitally, and manage their profile — built with **Next.js**, **BetterAuth**, **MongoDB**, **Tailwind CSS**, and **DaisyUI**.
+This is an online book borrowing website. Users can browse books, search by title, filter by category, login, register, borrow books, and update their profile.
 
-## Live URL
+Assignment: Category A8 Mango
 
-> Deploy to Vercel and paste your live link here: `https://your-app.vercel.app`
+Live URL: (add your vercel link here)
 
-## GitHub Repository
+GitHub Repo: https://github.com/hri155/MangoBooks
 
-> Paste your GitHub repo link here after pushing.
 
-## Key Features
+What this project has:
 
-- **Home Page** — Hero banner, scrolling marquee, featured books (top 4 from API), and two custom sections (Why Mango Books + Browse by Category)
-- **All Books** — Search by title + category sidebar filter (Story, Tech, Science)
-- **Book Details** — Private route with cover, author, description, availability, and borrow action with toast confirmation
-- **Authentication** — Email/password login & registration with BetterAuth
-- **Google OAuth** — One-click social login via Google
-- **My Profile** — Private route showing all user information
-- **Update Profile** — Edit name and profile image using BetterAuth `updateUser`
-- **Responsive Design** — Mobile, tablet, and desktop layouts
-- **Animate.css** — Smooth entrance animations across pages
+- Home page with banner, marquee, and featured books
+- All books page with search and category filter
+- Book details page (login required)
+- Login and register pages
+- Google login support
+- My profile page (login required)
+- Update profile page
+- Responsive design for mobile, tablet, and desktop
 
-## Tech Stack
 
-| Technology | Purpose |
-|---|---|
-| Next.js 16 | React framework (App Router) |
-| Tailwind CSS v4 | Utility-first styling |
-| DaisyUI | UI component library |
-| BetterAuth | Authentication (email + Google) |
-| MongoDB | User session & account storage |
-| Animate.css | CSS animations |
-| React Hot Toast | Toast notifications |
+Tech used:
 
-## NPM Packages Used
+- Next.js
+- Tailwind CSS
+- DaisyUI
+- BetterAuth
+- MongoDB
+- Animate.css
+- React Hot Toast
 
-- `next`, `react`, `react-dom`
-- `better-auth`
-- `mongodb`
-- `daisyui`
-- `animate.css`
-- `react-hot-toast`
-- `tailwindcss`, `@tailwindcss/postcss`, `typescript`, `eslint`
 
-## Getting Started
+How to run the project:
 
-### 1. Clone the repository
+1. Clone the project
+2. Go inside the mango-books folder
+3. Run: npm install
+4. Copy .env.example to .env.local and fill the values
+5. Run: npm run dev
+6. Open http://localhost:3000 in browser
 
-```bash
-git clone <your-repo-url>
-cd mango-books
-```
 
-### 2. Install dependencies
+Environment variables needed in .env.local:
 
-```bash
-npm install
-```
+MONGODB_URI = your mongodb connection string
+MONGODB_DB_NAME = mango-books
+BETTER_AUTH_SECRET = any random secret (at least 32 characters)
+BETTER_AUTH_URL = http://localhost:3000
+NEXT_PUBLIC_APP_URL = http://localhost:3000
+GOOGLE_CLIENT_ID = from google cloud console
+GOOGLE_CLIENT_SECRET = from google cloud console
 
-### 3. Configure environment variables
 
-Copy `.env.example` to `.env.local` and fill in your values:
+Demo account for testing:
 
-```bash
-cp .env.example .env.local
-```
+Run this command first:
+npm run seed:demo
 
-| Variable | Description |
-|---|---|
-| `MONGODB_URI` | MongoDB Atlas connection string |
-| `MONGODB_DB_NAME` | Database name (default: `mango-books`) |
-| `BETTER_AUTH_SECRET` | Random secret (min 32 characters) |
-| `BETTER_AUTH_URL` | App URL (`http://localhost:3000` for dev) |
-| `NEXT_PUBLIC_APP_URL` | Same as above, used by auth client |
-| `GOOGLE_CLIENT_ID` | Google OAuth client ID |
-| `GOOGLE_CLIENT_SECRET` | Google OAuth client secret |
+Then login with:
+Email: demo@mangobooks.com
+Password: Demo@12345
 
-#### MongoDB Atlas Setup
 
-1. Create a free cluster at [mongodb.com/atlas](https://www.mongodb.com/atlas)
-2. Create a database user and get your connection string
-3. Add `0.0.0.0/0` to Network Access (for Vercel deployment)
+How to deploy:
 
-#### Google OAuth Setup
+1. Push code to github
+2. Deploy on vercel.com
+3. Add all env variables in vercel settings
+4. Update BETTER_AUTH_URL and NEXT_PUBLIC_APP_URL to your live site url
 
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create OAuth 2.0 credentials (Web application)
-3. Add authorized redirect URI: `http://localhost:3000/api/auth/callback/google`
-4. For production, also add: `https://your-app.vercel.app/api/auth/callback/google`
 
-#### Generate Auth Secret
+NPM packages used:
 
-```bash
-openssl rand -base64 32
-```
-
-### 4. Run the development server
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000).
-
-## Project Structure
-
-```
-src/
-├── app/
-│   ├── api/auth/[...all]/   # BetterAuth API routes
-│   ├── api/books/           # Books JSON API
-│   ├── all-books/           # All books with search & filter
-│   ├── books/[id]/          # Book details (private)
-│   ├── login/               # Login page
-│   ├── register/            # Registration page
-│   ├── profile/             # User profile (private)
-│   └── profile/update/      # Update profile (private)
-├── components/              # Reusable UI components
-├── data/books.json          # 12 book records
-├── lib/                     # Auth, MongoDB, book helpers
-└── types/                   # TypeScript types
-```
-
-## Deployment (Vercel)
-
-1. Push code to GitHub
-2. Import project on [vercel.com](https://vercel.com)
-3. Add all environment variables from `.env.example`
-4. Set `BETTER_AUTH_URL` and `NEXT_PUBLIC_APP_URL` to your Vercel domain
-5. Deploy
-
-## Assignment Checklist
-
-- [x] Header with logo, nav links, conditional login/logout
-- [x] Footer with social links and Contact Us
-- [x] Home: banner, marquee, featured books, 2 extra sections
-- [x] Login & Register with email/password + Google OAuth
-- [x] All Books with search bar and book cards
-- [x] Book Details private route with borrow button + toast
-- [x] My Profile private route with user info
-- [x] Update profile challenge (name + image)
-- [x] Category sidebar filter challenge
-- [x] Animate.css npm package integration
-- [x] Environment variables for secrets
-- [x] Responsive design
-- [x] README.md
-
-## Author
-
-**Category A8 — Mango Assignment**
+next, react, react-dom, better-auth, mongodb, daisyui, animate.css, react-hot-toast, tailwindcss, typescript, eslint
