@@ -8,7 +8,10 @@ const db = client.db(process.env.MONGODB_DB_NAME || "mango-books");
 export const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET,
   baseURL: process.env.BETTER_AUTH_URL,
-  database: mongodbAdapter(db, { client }),
+  database: mongodbAdapter(db, {
+    client,
+    transaction: false,
+  }),
   emailAndPassword: {
     enabled: true,
   },
