@@ -6,7 +6,7 @@
     "description": "Between life and death there is a library, and within that library, the shelves go on forever. Every book provides a chance to try another life you could have lived.",
     "category": "Story",
     "available_quantity": 8,
-    "image_url": "https://images.unsplash.com/photo-1544947950-fa07a98da237?w=400&h=600&fit=crop"
+    "image_url": "https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&w=400&h=600&fit=crop"
   },
   {
     "id": "2",
@@ -15,7 +15,7 @@
     "description": "An easy and proven way to build good habits and break bad ones. Tiny changes that deliver remarkable results over time.",
     "category": "Tech",
     "available_quantity": 12,
-    "image_url": "https://images.unsplash.com/photo-1589998059171-988d887df646?w=400&h=600&fit=crop"
+    "image_url": "https://images.unsplash.com/photo-1589998059171-988d887df646?auto=format&w=400&h=600&fit=crop"
   },
   {
     "id": "3",
@@ -24,7 +24,7 @@
     "description": "A landmark volume in science writing that explores the origins of the universe, black holes, and the nature of time itself.",
     "category": "Science",
     "available_quantity": 5,
-    "image_url": "https://images.unsplash.com/photo-1532012197268-da468d1e5e2c?w=400&h=600&fit=crop"
+    "image_url": "https://images.unsplash.com/photo-1614728263952-84ea256f9679?auto=format&w=400&h=600&fit=crop"
   },
   {
     "id": "4",
@@ -33,7 +33,7 @@
     "description": "A magical story about following your dreams. Santiago, an Andalusian shepherd boy, travels from Spain to Egypt in search of treasure.",
     "category": "Story",
     "available_quantity": 10,
-    "image_url": "https://images.unsplash.com/photo-1512820790801-4153a73777b?w=400&h=600&fit=crop"
+    "image_url": "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&w=400&h=600&fit=crop"
   },
   {
     "id": "5",
@@ -42,7 +42,7 @@
     "description": "A handbook of agile software craftsmanship. Learn how to write code that is readable, maintainable, and elegant.",
     "category": "Tech",
     "available_quantity": 7,
-    "image_url": "https://images.unsplash.com/photo-1516116216624-53e697fed81a?w=400&h=600&fit=crop"
+    "image_url": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&w=400&h=600&fit=crop"
   },
   {
     "id": "6",
@@ -51,7 +51,7 @@
     "description": "A brief history of humankind. From the Stone Age to the Silicon Age, explore how Homo sapiens came to dominate the world.",
     "category": "Science",
     "available_quantity": 6,
-    "image_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop"
+    "image_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&w=400&h=600&fit=crop"
   },
   {
     "id": "7",
@@ -60,7 +60,7 @@
     "description": "A romantic novel of manners that follows the emotional development of Elizabeth Bennet in Georgian-era England.",
     "category": "Story",
     "available_quantity": 9,
-    "image_url": "https://images.unsplash.com/photo-1476275466078-4007374efbbe?w=400&h=600&fit=crop"
+    "image_url": "https://images.unsplash.com/photo-1476275466078-4007374efbbe?auto=format&w=400&h=600&fit=crop"
   },
   {
     "id": "8",
@@ -69,7 +69,7 @@
     "description": "Your journey to mastery. Tips and best practices for becoming an effective and productive programmer.",
     "category": "Tech",
     "available_quantity": 4,
-    "image_url": "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=400&h=600&fit=crop"
+    "image_url": "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?auto=format&w=400&h=600&fit=crop"
   },
   {
     "id": "9",
@@ -78,7 +78,7 @@
     "description": "A personal voyage through the universe. Sagan explores 15 billion years of cosmic evolution and the future of science.",
     "category": "Science",
     "available_quantity": 3,
-    "image_url": "https://images.unsplash.com/photo-1446776657006-862902757b9c?w=400&h=600&fit=crop"
+    "image_url": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&w=400&h=600&fit=crop"
   },
   {
     "id": "10",
@@ -87,7 +87,7 @@
     "description": "A gripping tale of racial injustice and childhood innocence in the American South during the 1930s.",
     "category": "Story",
     "available_quantity": 11,
-    "image_url": "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=600&fit=crop"
+    "image_url": "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&w=400&h=600&fit=crop"
   },
   {
     "id": "11",
@@ -96,7 +96,7 @@
     "description": "Elements of reusable object-oriented software. The definitive guide to classic design patterns in software engineering.",
     "category": "Tech",
     "available_quantity": 2,
-    "image_url": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=600&fit=crop"
+    "image_url": "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&w=400&h=600&fit=crop"
   },
   {
     "id": "12",
@@ -105,6 +105,6 @@
     "description": "An intimate history of the gene and the science of genetics, from Mendel to CRISPR and the future of humanity.",
     "category": "Science",
     "available_quantity": 5,
-    "image_url": "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=400&h=600&fit=crop"
+    "image_url": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&w=400&h=600&fit=crop"
   }
 ]
