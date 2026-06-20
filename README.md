@@ -4,6 +4,8 @@ This is an online book borrowing website. Users can browse books, search by titl
 
 Assignment: Category A8 Mango
 
+Author: Hridi (hridibaishya@gmail.com)
+
 Live URL: (add your vercel link here)
 
 GitHub Repo: https://github.com/hri155/MangoBooks
