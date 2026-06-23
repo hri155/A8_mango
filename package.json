@@ -1,5 +1,6 @@
 {
-  "name": "mango-books",
+  "name": "a8-mango-books",
+  "description": "Category A8 Mango - Online Book Borrowing Platform",
   "version": "0.1.0",
   "private": true,
   "scripts": {
