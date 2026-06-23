@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ServerApiVersion } from "mongodb";
 
 const uri = process.env.MONGODB_URI;
 
@@ -11,8 +11,17 @@ declare global {
   var _mongoClient: MongoClient | undefined;
 }
 
-// Vercel/serverless: reuse one client — do NOT call connect(), close(), or ping at startup
-const client = global._mongoClient ?? new MongoClient(uri);
+// Atlas Stable API — same options as MongoDB driver snippet
+// Vercel/serverless: do NOT call connect(), close(), or ping here
+const client =
+  global._mongoClient ??
+  new MongoClient(uri, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    },
+  });
 
 global._mongoClient = client;
 
