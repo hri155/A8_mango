@@ -6,8 +6,8 @@ const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
 const DEMO_USER = {
   name: "Demo User",
-  email: "demo@mangobooks.com",
-  password: "Demo@12345",
+  email: "test+1234@gmail.com",
+  password: "12345678",
   image:
     "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&w=200&h=200&fit=crop",
 };

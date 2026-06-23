@@ -17,8 +17,8 @@ function getAllowedOrigins(): string[] {
 function isOriginAllowed(origin: string): boolean {
   if (getAllowedOrigins().includes(origin)) return true;
 
-  // Allow any Vercel preview/production subdomain
-  if (/^https:\/\/[\w-]+\.vercel\.app$/.test(origin)) return true;
+  // Allow Vercel preview/production subdomains (including team project URLs)
+  if (/^https:\/\/[\w-]+(\.[\w-]+)*\.vercel\.app$/.test(origin)) return true;
 
   return false;
 }

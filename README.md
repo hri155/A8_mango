@@ -6,7 +6,9 @@ Assignment: Category A8 Mango
 
 Author: Hridi (hridibaishya@gmail.com)
 
-Live URL: https://mango-books-virid.vercel.app/
+Live URL: https://a8-mango-fogd5jg28-hridi-s-projects.vercel.app/
+
+Also available at: https://mango-books-virid.vercel.app/
 
 GitHub Repo: https://github.com/hri155/A8_mango
 
@@ -64,14 +66,16 @@ GOOGLE_CLIENT_ID = from google cloud console
 GOOGLE_CLIENT_SECRET = from google cloud console
 
 
-Demo account for testing:
+Demo account for testing (examiner can use this):
 
-Run this command first:
+Email: test+1234@gmail.com
+Password: 12345678
+
+To create demo account locally run:
 npm run seed:demo
 
-Then login with:
-Email: demo@mangobooks.com
-Password: Demo@12345
+For live site run:
+NEXT_PUBLIC_APP_URL=https://a8-mango-fogd5jg28-hridi-s-projects.vercel.app npm run seed:demo
 
 
 How to deploy on Vercel:
