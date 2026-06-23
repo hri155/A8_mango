@@ -8,7 +8,7 @@ Author: Hridi (hridibaishya@gmail.com)
 
 Live URL: (add your vercel link here)
 
-GitHub Repo: https://github.com/hri155/MangoBooks
+GitHub Repo: https://github.com/hri155/A8_mango
 
 
 What this project has:
