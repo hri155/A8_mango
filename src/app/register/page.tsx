@@ -11,8 +11,19 @@ export default function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
+  const [photoSkipped, setPhotoSkipped] = useState(false);
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const handleSkipPhoto = () => {
+    setPhotoUrl("");
+    setPhotoSkipped(true);
+  };
+
+  const handlePhotoChange = (value: string) => {
+    setPhotoUrl(value);
+    if (value) setPhotoSkipped(false);
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -87,16 +98,31 @@ export default function RegisterPage() {
 
             <div className="form-control">
               <label className="label" htmlFor="photo">
-                <span className="label-text">Photo URL</span>
+                <span className="label-text">Photo URL (optional)</span>
+                {!photoSkipped && (
+                  <button
+                    type="button"
+                    onClick={handleSkipPhoto}
+                    className="label-text-alt btn btn-ghost btn-xs"
+                  >
+                    Skip
+                  </button>
+                )}
               </label>
-              <input
-                id="photo"
-                type="url"
-                placeholder="https://example.com/photo.jpg"
-                className="input input-bordered w-full"
-                value={photoUrl}
-                onChange={(e) => setPhotoUrl(e.target.value)}
-              />
+              {photoSkipped ? (
+                <p className="text-sm text-base-content/60 px-1">
+                  Photo skipped. You can add one later from My Profile.
+                </p>
+              ) : (
+                <input
+                  id="photo"
+                  type="url"
+                  placeholder="https://example.com/photo.jpg"
+                  className="input input-bordered w-full"
+                  value={photoUrl}
+                  onChange={(e) => handlePhotoChange(e.target.value)}
+                />
+              )}
             </div>
 
             <div className="form-control">

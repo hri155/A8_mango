@@ -6,7 +6,7 @@ Assignment: Category A8 Mango
 
 Author: Hridi (hridibaishya@gmail.com)
 
-Live URL: (add your vercel link here)
+Live URL: https://mango-books-virid.vercel.app/
 
 GitHub Repo: https://github.com/hri155/A8_mango
 
