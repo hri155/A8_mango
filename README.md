@@ -74,12 +74,42 @@ Email: demo@mangobooks.com
 Password: Demo@12345
 
 
-How to deploy:
+How to deploy on Vercel:
+
+This is a Next.js app (not Express). You do NOT need vercel.json or index.js.
 
 1. Push code to github
-2. Deploy on vercel.com
-3. Add all env variables in vercel settings
-4. Update BETTER_AUTH_URL and NEXT_PUBLIC_APP_URL to your live site url
+2. Import project on vercel.com
+3. Add environment variables in Vercel dashboard (Settings → Environment Variables)
+   - Names are case sensitive — must match exactly:
+   - MONGODB_URI
+   - MONGODB_DB_NAME
+   - BETTER_AUTH_SECRET
+   - BETTER_AUTH_URL
+   - NEXT_PUBLIC_APP_URL
+   - GOOGLE_CLIENT_ID
+   - GOOGLE_CLIENT_SECRET
+4. Use your stable domain link from Vercel dashboard (Domains section):
+   https://mango-books-virid.vercel.app
+   (Terminal deploy link may change — dashboard domain stays same)
+5. Redeploy after changing env variables
+
+MongoDB Atlas checklist:
+
+1. Network Access → allow 0.0.0.0/0 (all IPs) so Vercel can connect
+2. Database Access → correct username and password in MONGODB_URI
+3. After changing password click Update User in Atlas
+4. Copy connection string from Connect → Drivers
+
+Vercel env values for live site:
+
+MONGODB_URI = mongodb+srv://USER:PASSWORD@cluster0.uzw2cal.mongodb.net/mango-books?retryWrites=true&w=majority
+MONGODB_DB_NAME = mango-books
+BETTER_AUTH_SECRET = any random string min 32 characters
+BETTER_AUTH_URL = https://mango-books-virid.vercel.app
+NEXT_PUBLIC_APP_URL = https://mango-books-virid.vercel.app
+
+package.json already has: "start": "next start" (required for Vercel)
 
 
 NPM packages used:
