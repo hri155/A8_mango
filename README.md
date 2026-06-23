@@ -66,7 +66,7 @@ GOOGLE_CLIENT_ID = from google cloud console
 GOOGLE_CLIENT_SECRET = from google cloud console
 
 
-Demo account for testing (examiner can use this):
+Demo account for testing:
 
 Email: test+1234@gmail.com
 Password: 12345678
