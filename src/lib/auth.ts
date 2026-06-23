@@ -22,6 +22,8 @@ export const auth = betterAuth({
     },
   },
   trustedOrigins: [
+    "http://localhost:3000",
+    "https://mango-books-virid.vercel.app",
     process.env.BETTER_AUTH_URL || "http://localhost:3000",
     process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
   ],

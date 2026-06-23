@@ -49,8 +49,17 @@ Environment variables needed in .env.local:
 MONGODB_URI = your mongodb connection string
 MONGODB_DB_NAME = mango-books
 BETTER_AUTH_SECRET = any random secret (at least 32 characters)
+
+For local:
 BETTER_AUTH_URL = http://localhost:3000
 NEXT_PUBLIC_APP_URL = http://localhost:3000
+
+For live site (https://mango-books-virid.vercel.app) set in Vercel:
+BETTER_AUTH_URL = https://mango-books-virid.vercel.app
+NEXT_PUBLIC_APP_URL = https://mango-books-virid.vercel.app
+
+See .env.production.example for full production values.
+
 GOOGLE_CLIENT_ID = from google cloud console
 GOOGLE_CLIENT_SECRET = from google cloud console
 
