@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { applyCorsHeaders, corsPreflightResponse } from "@/lib/cors";
 import { getAllBooks, searchBooks } from "@/lib/books";
 import type { BookCategory } from "@/types/book";
+
+export async function OPTIONS(request: Request) {
+  return corsPreflightResponse(request);
+}
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -9,7 +14,10 @@ export async function GET(request: NextRequest) {
   const featured = searchParams.get("featured");
 
   if (featured === "true") {
-    return NextResponse.json(getAllBooks().slice(0, 4));
+    return applyCorsHeaders(
+      request,
+      NextResponse.json(getAllBooks().slice(0, 4))
+    );
   }
 
   let books = query ? searchBooks(query) : getAllBooks();
@@ -18,5 +26,5 @@ export async function GET(request: NextRequest) {
     books = books.filter((book) => book.category === category);
   }
 
-  return NextResponse.json(books);
+  return applyCorsHeaders(request, NextResponse.json(books));
 }

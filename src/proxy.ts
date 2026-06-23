@@ -1,9 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionCookie } from "better-auth/cookies";
+import { buildCorsHeaders } from "@/lib/cors";
 
 export async function proxy(request: NextRequest) {
-  const sessionCookie = getSessionCookie(request);
   const { pathname } = request.nextUrl;
+
+  // CORS for all API routes
+  if (pathname.startsWith("/api/")) {
+    if (request.method === "OPTIONS") {
+      return new NextResponse(null, {
+        status: 204,
+        headers: buildCorsHeaders(request),
+      });
+    }
+
+    const response = NextResponse.next();
+    Object.entries(buildCorsHeaders(request)).forEach(([key, value]) => {
+      response.headers.set(key, value);
+    });
+    return response;
+  }
+
+  const sessionCookie = getSessionCookie(request);
 
   const isProtected =
     pathname.startsWith("/books/") ||
@@ -20,5 +38,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/books/:path*", "/profile", "/profile/:path*"],
+  matcher: ["/api/:path*", "/books/:path*", "/profile", "/profile/:path*"],
 };
