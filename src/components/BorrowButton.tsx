@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 
 interface BorrowButtonProps {
+  bookId?: string;
   bookTitle: string;
   availableQuantity: number;
 }
@@ -18,7 +19,8 @@ export default function BorrowButton({
 
   const handleBorrow = () => {
     if (!session?.user) {
-      router.push("/login");
+      toast.error("Please login first to borrow this book.");
+      router.push(`/login?redirect=${encodeURIComponent(window.location.pathname)}`);
       return;
     }
 
@@ -27,7 +29,45 @@ export default function BorrowButton({
       return;
     }
 
-    toast.success(`Successfully borrowed "${bookTitle}"! Enjoy your read.`);
+    toast.custom(
+      (t) => (
+        <div
+          className={`card w-80 bg-base-100 shadow-2xl border border-primary/30 animate__animated ${
+            t.visible ? "animate__fadeInDown" : "animate__fadeOutUp"
+          }`}
+        >
+          <div className="card-body p-4">
+            <h3 className="font-bold text-base">Confirm borrow</h3>
+            <p className="text-sm text-base-content/70">
+              Do you want to borrow{" "}
+              <span className="font-semibold">{bookTitle}</span>?
+            </p>
+
+            <div className="card-actions justify-end mt-2">
+              <button
+                type="button"
+                className="btn btn-ghost btn-sm"
+                onClick={() => toast.dismiss(t.id)}
+              >
+                Cancel
+              </button>
+
+              <button
+                type="button"
+                className="btn btn-primary btn-sm"
+                onClick={() => {
+                  toast.dismiss(t.id);
+                  toast.success(`Borrow confirmed for "${bookTitle}"!`);
+                }}
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      ),
+      { duration: 8000 }
+    );
   };
 
   return (

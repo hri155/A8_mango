@@ -1,65 +1,140 @@
 "use client";
 
 import { Suspense, useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import BookCard from "@/components/BookCard";
 import CategorySidebar from "@/components/CategorySidebar";
 import type { Book, BookCategory } from "@/types/book";
+import { BOOK_CATEGORIES } from "@/types/book";
+
+function isBookCategory(value: string | null): value is BookCategory {
+  return BOOK_CATEGORIES.includes(value as BookCategory);
+}
 
 function AllBooksContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const initialCategory =
-    (searchParams.get("category") as BookCategory | "All") || "All";
 
-  const [books, setBooks] = useState<Book[]>([]);
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState<BookCategory | "All">(initialCategory);
-  const [loading, setLoading] = useState(true);
+  const urlCategory = searchParams.get("category");
+  const urlSearch = searchParams.get("q") || "";
+  const initialCategory = isBookCategory(urlCategory) ? urlCategory : "All";
+
+  const [books, setBooks] = useState<Book[] | null>(null);
+  const [search, setSearch] = useState(urlSearch);
+  const [category, setCategory] =
+    useState<BookCategory | "All">(initialCategory);
+
+  const loading = books === null;
 
   useEffect(() => {
-    setLoading(true);
+    const timeout = window.setTimeout(() => {
+      const params = new URLSearchParams();
+
+      if (search.trim()) params.set("q", search.trim());
+      if (category !== "All") params.set("category", category);
+
+      const query = params.toString();
+
+      router.replace(query ? `/all-books?${query}` : "/all-books", {
+        scroll: false,
+      });
+    }, 250);
+
+    return () => window.clearTimeout(timeout);
+  }, [search, category, router]);
+
+  useEffect(() => {
+    let ignore = false;
+
     const params = new URLSearchParams();
-    if (search) params.set("q", search);
+
+    if (search.trim()) params.set("q", search.trim());
     if (category !== "All") params.set("category", category);
 
-    fetch(`/api/books?${params.toString()}`)
+    fetch(`/api/books?${params.toString()}`, { credentials: "include" })
       .then((res) => res.json())
       .then((data: Book[]) => {
-        setBooks(data);
-        setLoading(false);
+        if (!ignore) setBooks(data);
       })
-      .catch(() => setLoading(false));
+      .catch(() => {
+        if (!ignore) setBooks([]);
+      });
+
+    return () => {
+      ignore = true;
+    };
   }, [search, category]);
 
   const resultText = useMemo(() => {
     if (loading) return "Loading books...";
-    return `${books.length} book${books.length === 1 ? "" : "s"} found`;
-  }, [books.length, loading]);
+
+    const categoryText = category === "All" ? "all categories" : category;
+
+    return `${books.length} book${
+      books.length === 1 ? "" : "s"
+    } found in ${categoryText}`;
+  }, [books, category, loading]);
+
+  const handleCategorySelect = (nextCategory: BookCategory | "All") => {
+    setBooks(null);
+    setCategory(nextCategory);
+  };
+
+  const handleSearchChange = (value: string) => {
+    setBooks(null);
+    setSearch(value);
+  };
 
   return (
     <div className="container mx-auto px-4 py-10">
-      <h1 className="text-3xl font-bold mb-2 animate__animated animate__fadeIn">
-        All Books
-      </h1>
-      <p className="text-base-content/70 mb-8">
-        Search and filter our collection to find your perfect read.
-      </p>
+      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
+        <div>
+          <h1 className="text-3xl font-bold mb-2 animate__animated animate__fadeIn">
+            All Books
+          </h1>
+
+          <p className="text-base-content/70">
+            Search and filter our collection to find your perfect read.
+          </p>
+        </div>
+
+        <div className="badge badge-outline badge-lg animate__animated animate__pulse">
+          Animate.css npm package active
+        </div>
+      </div>
 
       <div className="form-control mb-8 max-w-2xl">
+        <label className="label" htmlFor="book-search">
+          <span className="label-text">Search books by title</span>
+        </label>
+
         <input
+          id="book-search"
           type="search"
           placeholder="Search books by title..."
           className="input input-bordered input-lg w-full"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => handleSearchChange(e.target.value)}
         />
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8">
-        <CategorySidebar selected={category} onSelect={setCategory} />
+        <CategorySidebar selected={category} onSelect={handleCategorySelect} />
 
         <div className="flex-1">
-          <p className="text-sm text-base-content/60 mb-4">{resultText}</p>
+          <div className="flex flex-wrap items-center gap-3 mb-4">
+            <p className="text-sm text-base-content/60">{resultText}</p>
+
+            {category !== "All" && (
+              <button
+                type="button"
+                className="btn btn-ghost btn-xs"
+                onClick={() => handleCategorySelect("All")}
+              >
+                Clear category
+              </button>
+            )}
+          </div>
 
           {loading ? (
             <div className="flex justify-center py-16">

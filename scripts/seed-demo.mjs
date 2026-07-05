@@ -1,7 +1,4 @@
-/**
- * Seeds the demo user for local development and assignment testing.
- * Run: npm run seed:demo
- */
+
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
 const DEMO_USER = {

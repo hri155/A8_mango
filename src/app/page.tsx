@@ -14,11 +14,11 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      <section className="hero min-h-[70vh] bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50">
+      <section className="hero min-h-[70vh] bg-linear-to-br from-orange-50 via-amber-50 to-yellow-50">
         <div className="hero-content text-center py-16 px-4">
           <div className="max-w-3xl animate__animated animate__fadeInDown">
             <span className="text-6xl mb-4 block">🥭📚</span>
-            <h1 className="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-6xl font-extrabold bg-linear-to-r from-orange-500 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
               Find Your Next Read
             </h1>
             <p className="py-6 text-lg text-base-content/70 max-w-xl mx-auto">

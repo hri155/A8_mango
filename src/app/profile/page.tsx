@@ -1,82 +1,214 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { redirect } from "next/navigation";
-import { headers } from "next/headers";
-import { auth } from "@/lib/auth";
+"use client";
 
-export const metadata: Metadata = {
-  title: "My Profile | Mango Books",
-};
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { authClient } from "@/lib/auth-client";
 
-export default async function ProfilePage() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+export default function ProfilePage() {
+  const router = useRouter();
+  const { data: session, isPending, refetch } = authClient.useSession();
 
-  if (!session) {
-    redirect("/login");
+  const [name, setName] = useState("");
+  const [image, setImage] = useState("");
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  useEffect(() => {
+    if (!isPending && !session?.user) {
+      router.replace("/login?redirect=/profile");
+    }
+  }, [isPending, session, router]);
+
+  useEffect(() => {
+    if (session?.user) {
+      setName(session.user.name || "");
+      setImage(session.user.image || "");
+    }
+  }, [session]);
+
+  const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!session?.user) {
+      toast.error("Please login first.");
+      return;
+    }
+
+    if (!name.trim()) {
+      toast.error("Name is required.");
+      return;
+    }
+
+    setIsUpdating(true);
+    const toastId = toast.loading("Updating profile...");
+
+    try {
+      const { error } = await authClient.updateUser({
+        name: name.trim(),
+        image: image.trim(),
+      });
+
+      if (error) {
+        toast.error(error.message || "Profile update failed.", {
+          id: toastId,
+        });
+        return;
+      }
+
+      await refetch();
+
+      toast.success("Profile updated successfully!", {
+        id: toastId,
+      });
+
+      router.refresh();
+    } catch {
+      toast.error("Something went wrong.", {
+        id: toastId,
+      });
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  if (isPending) {
+    return (
+      <section className="min-h-[65vh] flex items-center justify-center">
+        <span className="loading loading-spinner loading-lg text-warning"></span>
+      </section>
+    );
   }
 
-  const { user } = session;
+  if (!session?.user) {
+    return (
+      <section className="min-h-[65vh] flex items-center justify-center">
+        <p className="font-semibold">Redirecting to login...</p>
+      </section>
+    );
+  }
+
+  const user = session.user;
 
   return (
-    <div className="container mx-auto px-4 py-10">
-      <h1 className="text-3xl font-bold mb-8 animate__animated animate__fadeIn">
-        My Profile
-      </h1>
+    <section className="min-h-[65vh] px-4 py-10">
+      <div className="max-w-5xl mx-auto">
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold animate__animated animate__fadeInDown">
+            My Profile
+          </h1>
+          <p className="text-base-content/70 mt-2">
+            View and update your account information.
+          </p>
+        </div>
 
-      <div className="card max-w-2xl mx-auto bg-base-100 shadow-xl border border-base-200 animate__animated animate__fadeInUp">
-        <div className="card-body items-center text-center">
-          <div className="avatar mb-4">
-            <div className="w-32 h-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="card bg-base-100 shadow-xl border animate__animated animate__fadeInLeft">
+            <div className="card-body items-center text-center">
               {user.image ? (
-                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={user.image}
-                  alt={user.name}
-                  className="w-full h-full object-cover"
+                  alt={user.name || "User"}
+                  className="w-32 h-32 rounded-full object-cover border-4 border-warning"
                 />
               ) : (
-                <div className="bg-primary text-primary-content w-full h-full flex items-center justify-center text-4xl font-bold">
-                  {user.name?.charAt(0)?.toUpperCase() || "U"}
+                <div className="avatar placeholder">
+                  <div className="bg-warning text-warning-content rounded-full w-32 h-32 flex items-center justify-center">
+                    <span className="text-5xl font-bold">
+                      {user.name?.charAt(0)?.toUpperCase() || "U"}
+                    </span>
+                  </div>
                 </div>
               )}
+
+              <h2 className="text-2xl font-bold mt-4">
+                {user.name || "No Name Found"}
+              </h2>
+
+              <p className="text-base-content/70 break-all">{user.email}</p>
+
+              <div className="divider"></div>
+
+              <div className="w-full space-y-3 text-left">
+                <div className="bg-base-200 rounded-xl p-4">
+                  <p className="text-sm text-base-content/60">Name</p>
+                  <p className="font-semibold">{user.name || "Not provided"}</p>
+                </div>
+
+                <div className="bg-base-200 rounded-xl p-4">
+                  <p className="text-sm text-base-content/60">Email</p>
+                  <p className="font-semibold break-all">
+                    {user.email || "Not provided"}
+                  </p>
+                </div>
+
+                <div className="bg-base-200 rounded-xl p-4">
+                  <p className="text-sm text-base-content/60">Image URL</p>
+                  <p className="font-semibold break-all">
+                    {user.image || "Not provided"}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
-          <h2 className="card-title text-2xl">{user.name}</h2>
-          <p className="text-base-content/70">{user.email}</p>
+          <div className="card bg-base-100 shadow-xl border animate__animated animate__fadeInRight">
+            <div className="card-body">
+              <h2 className="card-title text-2xl">Edit Profile</h2>
+              <p className="text-base-content/70">
+                Update your name and profile image using BetterAuth.
+              </p>
 
-          <div className="divider" />
+              <form onSubmit={handleUpdateProfile} className="space-y-5 mt-4">
+                <div>
+                  <label className="label">
+                    <span className="label-text font-semibold">Name</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full"
+                    placeholder="Enter your name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                  />
+                </div>
 
-          <div className="w-full space-y-3 text-left">
-            <div className="flex justify-between py-2 border-b border-base-200">
-              <span className="font-medium text-base-content/70">Name</span>
-              <span>{user.name}</span>
-            </div>
-            <div className="flex justify-between py-2 border-b border-base-200">
-              <span className="font-medium text-base-content/70">Email</span>
-              <span>{user.email}</span>
-            </div>
-            <div className="flex justify-between py-2 border-b border-base-200">
-              <span className="font-medium text-base-content/70">Photo</span>
-              <span className="truncate max-w-[200px] text-sm">
-                {user.image || "Not set"}
-              </span>
-            </div>
-            <div className="flex justify-between py-2">
-              <span className="font-medium text-base-content/70">Member ID</span>
-              <span className="font-mono text-sm">{user.id.slice(0, 8)}...</span>
-            </div>
-          </div>
+                <div>
+                  <label className="label">
+                    <span className="label-text font-semibold">Image URL</span>
+                  </label>
+                  <input
+                    type="url"
+                    className="input input-bordered w-full"
+                    placeholder="https://example.com/profile.jpg"
+                    value={image}
+                    onChange={(e) => setImage(e.target.value)}
+                  />
+                </div>
 
-          <div className="card-actions mt-6">
-            <Link href="/profile/update" className="btn btn-primary">
-              Update Information
-            </Link>
+                {image && (
+                  <div className="bg-base-200 rounded-xl p-4">
+                    <p className="text-sm font-semibold mb-3">Image Preview</p>
+                    <img
+                      src={image}
+                      alt="Preview"
+                      className="w-24 h-24 rounded-full object-cover border"
+                    />
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  className="btn btn-warning w-full"
+                  disabled={isUpdating}
+                >
+                  {isUpdating ? "Updating..." : "Update Profile"}
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
